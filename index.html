@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function hage(){
+        var inputTextArr = document.getElementById("area").value;
+        var outputText = '';
+        var tempText = '';
+        inputTextArr = inputTextArr.split(/\r\n|\n/);
+
+        //console.log(inputTextArr);
+
+        for(var i = 0;i<inputTextArr.length;i++)
+        {
+            var resultQuestion = inputTextArr[i].lastIndexOf('?');
+            var resultX = inputTextArr[i].indexOf("x");
+
+            tempText = inputTextArr[i].slice(0,resultQuestion);
+            tempText = "https://fixup"+tempText.slice(resultX);
+            //console.log("temp:"+tempText);
+            
+            outputText += tempText + '\n';
+        }
+
+        console.log(outputText);
+        document.getElementById('area').value = outputText;
+    }
+    </script>
+    <button onclick="hage()">fix URL</button>
+    <textarea id="area" cols="100" rows="50"></textarea>
+    
+</body>
+</html>
