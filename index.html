@@ -9,29 +9,43 @@
     <script>
         function hage(){
         var inputTextArr = document.getElementById("area").value;
-        var outputText = '';
+        var outputTextArr = [];
         var tempText = '';
+        var resultQuestion = 0;
+        var resultX = 0;
+        var flag = 0;
+
         inputTextArr = inputTextArr.split(/\r\n|\n/);
-
-        //console.log(inputTextArr);
-
+        
         for(var i = 0;i<inputTextArr.length;i++)
         {
-            var resultQuestion = inputTextArr[i].lastIndexOf('?');
-            var resultX = inputTextArr[i].indexOf("x");
+            if(inputTextArr[i].match(/twitter.com|x.com/)=== null){}else
+            {
 
-            tempText = inputTextArr[i].slice(0,resultQuestion);
-            tempText = "https://fixup"+tempText.slice(resultX);
-            //console.log("temp:"+tempText);
+            if(inputTextArr[i].match(/twitter.com/))
+            {resultX = inputTextArr[i].indexOf("twitter.com");flag = 1;}
+            else
+            {resultX = inputTextArr[i].indexOf("x.com");}
+
+            if(inputTextArr[i].match(/\?/))
+            {resultQuestion = inputTextArr[i].lastIndexOf('?');tempText = inputTextArr[i].slice(0,resultQuestion);}
+            else
+            {tempText = inputTextArr[i];};
+
+            if(flag !=0)
+            {tempText = "https://fx"+tempText.slice(resultX);}
+            else
+            {tempText = "https://fixup"+tempText.slice(resultX);}
             
-            outputText += tempText + '\n';
+            outputTextArr[i] = tempText + '\n';
+        
+            for(var i = 0;i<outputTextArr.length;i++)
+            {document.getElementById('area').value = outputTextArr[i];}
+            }
         }
-
-        console.log(outputText);
-        document.getElementById('area').value = outputText;
     }
     </script>
-    <button onclick="hage()">fix URL</button>
+    <button onclick="hage()">fix URL</button><br>
     <textarea id="area" cols="100" rows="50"></textarea>
     
 </body>
